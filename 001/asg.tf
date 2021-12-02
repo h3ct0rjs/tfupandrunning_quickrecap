@@ -11,7 +11,7 @@ resource "aws_launch_configuration" "asg_lt" {
             EOF
   security_groups             = [aws_security_group.http-sg-instance.id]
   associate_public_ip_address = true
-  iam_instance_profile = data.aws_iam_role.ssmrole.name
+  iam_instance_profile        = data.aws_iam_role.ssmrole.name
   lifecycle {
     create_before_destroy = true
   }
