@@ -13,3 +13,7 @@ module "web_cluster_farm" {
   maxnodes    = 20
   desired     = 5
 }
+
+output "lb" {
+  value = module.web_cluster_farm.alb_dns_name
+}
