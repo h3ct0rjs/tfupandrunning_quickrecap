@@ -35,7 +35,7 @@ resource "aws_autoscaling_group" "asg-web-cluster" {
 data "template_file" "user-data" {
   template = file("${path.module}/user-data.sh")
   vars = {
-    serverport = var.server_port
+    serverport  = var.server_port
     environment = var.environment
   }
 }

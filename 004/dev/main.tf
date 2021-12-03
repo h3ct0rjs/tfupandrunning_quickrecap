@@ -9,7 +9,8 @@ module "web_cluster_farm" {
   server_port = 8080
   environment = "development"
   sg-name     = "dev-sg"
-  minnodes = 4
-  maxnodes = 20
+  minnodes    = 4
+  maxnodes    = 20
+  desired     = 5
 
 }
