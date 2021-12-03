@@ -1,6 +1,6 @@
 
 resource "aws_lb" "alb-web-farm" {
-  name               = "alb-web-farm"
+  name               = "alb-web-farm-${var.environment}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb-web-farm-sg.id]
@@ -9,7 +9,7 @@ resource "aws_lb" "alb-web-farm" {
   enable_deletion_protection = false
 
   tags = {
-    Environment = "production"
+    Environment = var.environment
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_lb_listener" "alb-web-listener" {
 }
 
 resource "aws_lb_target_group" "tg-web-farm" {
-  name     = "tg-web-farm"
+  name     = "tg-web-farm-${var.environment}"
   port     = 8080
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.main.id
@@ -43,6 +43,9 @@ resource "aws_lb_target_group" "tg-web-farm" {
     timeout             = 3
     healthy_threshold   = 2
     unhealthy_threshold = 2
+  }
+  tags = {
+    Environment = var.environment
   }
 }
 

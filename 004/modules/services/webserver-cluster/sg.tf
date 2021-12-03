@@ -1,6 +1,6 @@
 
 resource "aws_security_group" "http-sg-instance" {
-  name        = "allow_tls"
+  name        = var.sg-name
   description = "Allow TLS inbound traffic"
   vpc_id      = data.aws_vpc.main.id
 
@@ -21,13 +21,14 @@ resource "aws_security_group" "http-sg-instance" {
   }
 
   tags = {
-    Name = "allow_tls"
+    Name = var.sg-name
+    Environment = var.environment
   }
 }
 
 
 resource "aws_security_group" "alb-web-farm-sg" {
-  name        = "allow_http"
+  name        = "alb-web-sg-${var.environment}"
   description = "Allow HTTP 8080 inbound traffic"
   vpc_id      = data.aws_vpc.main.id
 

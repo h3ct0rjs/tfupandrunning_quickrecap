@@ -8,4 +8,7 @@ module "web_cluster_farm" {
   source      = "./../modules/services/webserver-cluster"
   server_port = 8080
   environment = "production"
+  sg-name     = "prod-sg"
+  minnodes =  10
+  maxnodes =  20
 }

@@ -14,15 +14,15 @@ resource "aws_launch_configuration" "asg_lt" {
 resource "aws_autoscaling_group" "asg-web-cluster" {
   name                 = "asg-web-cluster-${var.environment}"
   launch_configuration = aws_launch_configuration.asg_lt.name
-  min_size             = 8
-  max_size             = 10
+  min_size             = var.minnodes
+  max_size             = var.maxnodes
   vpc_zone_identifier  = data.aws_subnet_ids.defaultsubnets.ids
   target_group_arns    = [aws_lb_target_group.tg-web-farm.arn]
   health_check_type    = "ELB"
 
   tag {
     key                 = "Name"
-    value               = "asg-web-cluster-servers"
+    value               = "asg-web-cluster-servers-${var.environment}"
     propagate_at_launch = true
   }
 
@@ -36,5 +36,6 @@ data "template_file" "user-data" {
   template = file("${path.module}/user-data.sh")
   vars = {
     serverport = var.server_port
+    environment = var.environment
   }
 }
